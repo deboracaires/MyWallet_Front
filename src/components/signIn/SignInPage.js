@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
+import UserContext from '../../contexts/userContext';
 import { postSignIn } from '../../services/api.services';
 import { Conteiner, TitleLogin, Input, Button, TextSignUp } from "../../styles/LoginAndSignUpStyle";
 import { signInValidate } from '../../validations/signInValidate';
@@ -12,13 +13,16 @@ export default function SignInPage(){
 
     const navigate = useNavigate();
 
+    const { setUser } = useContext(UserContext);
+
     function signUp(e) {
         e.preventDefault();
         if (signInValidate(email, password)) {
             const body = { email, password}
             postSignIn(body)
                 .then((res) => {
-                    console.log(res.data)
+                    setUser(res.data);
+                    navigate('/principal');
                 })
                 .catch((err) => {
                     if (err.response.status === 401){ 
