@@ -47,7 +47,7 @@ const Content = styled.div `
         color: #868686;
         position: absolute;
         left: 20vw;
-        top: 20vh;
+        top: 40%;
     }
    
 `;
