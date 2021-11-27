@@ -18,7 +18,7 @@ export default function SignUpPage(){
         if (signUpValidate(name, email, password, confirmPassword)) {
             const body = { name, email, password };
             postSignUp(body)
-                .then((res) => {
+                .then(() => {
                     Swal.fire({
                         html: `<h1 style = 'color: #fff'>Conta registrada com sucesso!</h1>`,
                         timer: 2000,
@@ -58,7 +58,7 @@ export default function SignUpPage(){
                 <Input placeholder="Confirme a senha" type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}></Input>
                 <Button type="submit">Cadastrar</Button>
             </form>
-            <TextSignUp>Já tem uma conta? Entre agora!</TextSignUp>
+            <TextSignUp onClick = {() => navigate('/sign-in')}>Já tem uma conta? Entre agora!</TextSignUp>
         </Conteiner>
     );
 }

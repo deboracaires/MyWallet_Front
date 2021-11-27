@@ -65,10 +65,21 @@ const TextSignUp = styled.div `
     
 `;
 
+const TitleLogin = styled.div `
+    font-family: 'Saira Stencil One', cursive;
+    color: #fff;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 50px;
+    margin: 24vh 0 24px 0;
+`;
+
 export {
     Conteiner,
     Title,
     Input,
     Button,
     TextSignUp,
-}
+    TitleLogin,
+};
