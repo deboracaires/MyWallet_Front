@@ -27,7 +27,7 @@ export default function SignUpPage(){
                         showConfirmButton: false,
                         position: 'top',
                     });
-                    navigate('/sign-in')
+                    navigate('/')
                 })
                 .catch((err) => {
                     if (err.response.status === 409){ 
@@ -58,7 +58,7 @@ export default function SignUpPage(){
                 <Input placeholder="Confirme a senha" type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}></Input>
                 <Button type="submit">Cadastrar</Button>
             </form>
-            <TextSignUp onClick = {() => navigate('/sign-in')}>Já tem uma conta? Entre agora!</TextSignUp>
+            <TextSignUp onClick = {() => navigate('/')}>Já tem uma conta? Entre agora!</TextSignUp>
         </Conteiner>
     );
 }
