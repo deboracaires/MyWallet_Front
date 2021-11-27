@@ -4,7 +4,7 @@ import UserContext from "../../contexts/userContext";
 import { postFinancial } from "../../services/api.services.js";
 import { ContainerRegister, HeaderRegister, Input, Button } from '../../styles/registersStyle';
 
-export default function NewIncome(){
+export default function NewOutcome(){
     
     const [value, setValue] = useState("");
     const [description, setDescription] = useState("");
@@ -16,7 +16,7 @@ export default function NewIncome(){
     function saveTransaction(e){
         e.preventDefault();
         
-        const type = 'INCOME';
+        const type = 'OUTCOME';
 
         const config = { headers: { "Authorization": `Bearer ${user.token}` } }
 
@@ -33,12 +33,12 @@ export default function NewIncome(){
     return(
         <ContainerRegister>
             <HeaderRegister> 
-                <h1>Nova entrada</h1>
+                <h1>Nova saída</h1>
             </HeaderRegister>
             <form onSubmit={saveTransaction}>
                 <Input placeholder="Valor" type="number" min={0} value={value} onChange={e => setValue(e.target.value)} ></Input>
                 <Input placeholder="Descrição" value={description} onChange={e => setDescription(e.target.value)}></Input>
-                <Button type="submit"> Salvar entrada</Button>
+                <Button type="submit"> Salvar saída</Button>
             </form>
         </ContainerRegister>
     );
