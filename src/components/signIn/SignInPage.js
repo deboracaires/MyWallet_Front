@@ -22,6 +22,10 @@ export default function SignInPage(){
             postSignIn(body)
                 .then((res) => {
                     setUser(res.data);
+                    const token = JSON.stringify(res.data.token);
+                    sessionStorage.setItem("token", token);
+                    const name = JSON.stringify(res.data.name);
+                    sessionStorage.setItem("name", name);
                     navigate('/principal');
                 })
                 .catch((err) => {

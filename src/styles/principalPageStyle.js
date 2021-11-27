@@ -29,13 +29,13 @@ const HeaderPrincipalPage = styled.div `
 `
 const Content = styled.div `
     width: 87vw;
-    height: 66.86vh;
+    height: 59vh;
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    padding-bottom: 6.5vh;
+    padding-bottom: 2vh;
     position: relative;
     h1 {
         width: 50vw;
@@ -53,13 +53,13 @@ const Content = styled.div `
 `;
 
 const Balance = styled.div `
-    position: fixed;
+    
     height: 6vh;
     background-color: #fff;
     z-index: 10;
-    bottom: 21.5vh;
+    
     width: 87vw;
-    border-radius: 5px;
+    border-radius: 0 0 5px 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;

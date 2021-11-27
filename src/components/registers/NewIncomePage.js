@@ -1,8 +1,10 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
 import UserContext from "../../contexts/userContext";
 import { postFinancial } from "../../services/api.services.js";
 import { ContainerRegister, HeaderRegister, Input, Button } from '../../styles/registersStyle';
+import { validateUser } from "../../validations/nameAndTokenValidation";
 
 export default function NewIncome(){
     
@@ -13,21 +15,38 @@ export default function NewIncome(){
 
     const navigate = useNavigate();
 
+    const { token } = validateUser(user);
+
+    if(token === null) {
+        Swal.fire({
+            html: `<h1 style = 'color: #fff'>Sessão expirada! Faça login novamente!</h1>`,
+            width: '95%',
+            background: '#8C11BE',
+            confirmButtonColor: '#A328D6',
+        });
+        navigate('/');
+    }
+
     function saveTransaction(e){
         e.preventDefault();
         
         const type = 'INCOME';
 
-        const config = { headers: { "Authorization": `Bearer ${user.token}` } }
+        const config = { headers: { "Authorization": `Bearer ${user?user.token:token}` } }
 
         const body = { value, description, type };
 
         postFinancial(body, config)
             .then(() => navigate('/principal'))
-            .catch((err) => console.log(err))
-
-        
-
+            .catch(() => {
+                Swal.fire({
+                    html: `<h1 style = 'color: #fff'>Sessão expirada! Faça login novamente!</h1>`,
+                    width: '95%',
+                    background: '#8C11BE',
+                    confirmButtonColor: '#A328D6',
+                });
+                navigate('/');
+            });
     }
     
     return(

@@ -7,6 +7,8 @@ import UserContext from "../../contexts/userContext";
 import { getFinancialEvents, getSum } from "../../services/api.services";
 import { useNavigate } from "react-router";
 import Transaction from "./transaction.js";
+import Swal from "sweetalert2";
+import { validateUser } from "../../validations/nameAndTokenValidation";
 
 export default function PrincipalPage() {
     
@@ -14,14 +16,31 @@ export default function PrincipalPage() {
     const [text, setText] = useState('Carregando...');
     const [balance, setBalance] = useState([]);
 
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     const navigate = useNavigate();
 
+    const { token, name} = validateUser(user);
+
+    if(token === null) {
+        Swal.fire({
+            html: `<h1 style = 'color: #fff'>Sessão expirada! Faça login novamente!</h1>`,
+            width: '95%',
+            background: '#8C11BE',
+            confirmButtonColor: '#A328D6',
+        });
+        navigate('/');
+    }
+
+    function cleanLocal(){
+        sessionStorage.clear();
+        setUser('');
+        navigate('/');
+    }
     useEffect(() => {
         const config = {
             headers: {
-                'Authorization': `Bearer ${user.token}`
+                'Authorization': `Bearer ${user?user.token:token}`
             }
         }
         getFinancialEvents(config)
@@ -29,12 +48,28 @@ export default function PrincipalPage() {
                 setTransactions(res.data);
                 setText("Não há registros de entrada ou saída")
             })
-            .catch((err) => console.log(err));
+            .catch(() => {
+                Swal.fire({
+                    html: `<h1 style = 'color: #fff'>Sessão expirada! Faça login novamente!</h1>`,
+                    width: '95%',
+                    background: '#8C11BE',
+                    confirmButtonColor: '#A328D6',
+                });
+                navigate('/');
+            });
         getSum(config)
             .then((res) => setBalance(res.data))
-            .catch((err) => console.log(err));
-        
-    }, [user.token]);
+            .catch(() => {
+                Swal.fire({
+                    html: `<h1 style = 'color: #fff'>Sessão expirada! Faça login novamente!</h1>`,
+                    width: '95%',
+                    background: '#8C11BE',
+                    confirmButtonColor: '#A328D6',
+                });
+                navigate('/');
+            });
+        console.log('help')
+    }, [user, token, navigate]);
 
     let color = {};
 
@@ -47,9 +82,9 @@ export default function PrincipalPage() {
     return (
         <ContainerPrincipalPage>
             <HeaderPrincipalPage>
-                <h1>Olá, {user.name}</h1>
+                <h1>Olá, {user?user.name:name}</h1>
                 <div>
-                    <IoExitOutline color="#fff" size="35px"></IoExitOutline>
+                    <IoExitOutline color="#fff" size="35px" onClick={() => cleanLocal()}></IoExitOutline>
                 </div>
             </HeaderPrincipalPage>
             <Content>
@@ -63,7 +98,8 @@ export default function PrincipalPage() {
                         transactions.map((transaction, index) => <Transaction key={index} transaction={transaction}/>)
                     )
                 }
-                <Balance>
+            </Content>
+            <Balance>
                     <p>SALDO</p>
                     {
                         balance.length === 0 ?
@@ -76,7 +112,6 @@ export default function PrincipalPage() {
                         )
                     }
                 </Balance>
-            </Content>
             <BottomPrincipalPage>
                 <NewRegister onClick = {() => navigate('/registro-entrada')}>
                     <FiPlusCircle color="#fff" size="22px" ></FiPlusCircle>
