@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import UserContext from "../../contexts/userContext";
 import { getFinancialEvents, getSum } from "../../services/api.services";
 import { useNavigate } from "react-router";
+import Transaction from "./transaction.js";
 
 export default function PrincipalPage() {
     
@@ -59,7 +60,7 @@ export default function PrincipalPage() {
                     )
                     :
                     (
-                        transactions.map((transaction, index) => (console.log(transaction)))
+                        transactions.map((transaction, index) => <Transaction key={index} transaction={transaction}/>)
                     )
                 }
                 <Balance>
