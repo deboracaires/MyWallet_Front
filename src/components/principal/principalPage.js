@@ -68,7 +68,6 @@ export default function PrincipalPage() {
                 });
                 navigate('/');
             });
-        console.log('help')
     }, [user, token, navigate]);
 
     let color = {};
@@ -82,7 +81,7 @@ export default function PrincipalPage() {
     return (
         <ContainerPrincipalPage>
             <HeaderPrincipalPage>
-                <h1>Olá, {user?user.name:name}</h1>
+                <h1>Olá, {name}</h1>
                 <div>
                     <IoExitOutline color="#fff" size="35px" onClick={() => cleanLocal()}></IoExitOutline>
                 </div>

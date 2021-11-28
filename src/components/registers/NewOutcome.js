@@ -55,7 +55,7 @@ export default function NewOutcome(){
                 <h1>Nova saída</h1>
             </HeaderRegister>
             <form onSubmit={saveTransaction}>
-                <Input placeholder="Valor" type="number" min={0} value={value} onChange={e => setValue(e.target.value)} ></Input>
+                <Input placeholder="Valor" type="number" min={0.00} step = {0.01} value={value} onChange={e => setValue(e.target.value)} ></Input>
                 <Input placeholder="Descrição" value={description} onChange={e => setDescription(e.target.value)}></Input>
                 <Button type="submit"> Salvar saída</Button>
             </form>

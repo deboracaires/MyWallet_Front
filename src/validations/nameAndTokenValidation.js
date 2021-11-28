@@ -3,11 +3,13 @@ function validateUser(user){
     let name = '';
     if (user === undefined){
         token = JSON.parse(sessionStorage.getItem("token"));
-        name = JSON.parse(sessionStorage.getItem("name"));
         if (token === ''){
             return false;
         }
     }
+    name = JSON.parse(sessionStorage.getItem("name"));
+    const firstName = name.split(' ');
+    name = firstName[0];
     return {token, name};
 }
 

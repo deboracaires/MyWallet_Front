@@ -79,7 +79,7 @@ const Balance = styled.div `
 `;
 
 const BottomPrincipalPage = styled.div `
-    margin-top: 13px;
+    margin-top: 6vw;
     display: flex;
     justify-content: space-between;
     div:hover{
@@ -89,7 +89,7 @@ const BottomPrincipalPage = styled.div `
 
 const NewRegister = styled.div `
     width: 41vw;
-    height: 17.1vh;
+    height: 17vh;
     background: #A328D6;
     border-radius: 5px;
     padding: 9px 0 9px 3vw;
